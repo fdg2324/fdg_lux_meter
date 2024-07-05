@@ -38,8 +38,9 @@ class MyHomePageState extends State<MyHomePage> {
   void onData(int value) async {
     print("Lux value: $luxValue");
     setState(() {
-      if (value < maxLuxValue)
-      luxValue = value.toDouble();
+      if (value < maxLuxValue) {
+        luxValue = value.toDouble();
+      }
     });
   }
 
