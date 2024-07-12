@@ -52,7 +52,7 @@ class _LuxChartState extends State<LuxChart> {
               AspectRatio(
                 aspectRatio: 1.5,
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 24.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: LineChart(
                     duration: const Duration(milliseconds: 100),
                     LineChartData(
@@ -66,12 +66,15 @@ class _LuxChartState extends State<LuxChart> {
                         show: true,
                         drawVerticalLine: false,
                       ),
-                      borderData: FlBorderData(show: false),
+                      borderData: FlBorderData(show: true),
                       lineBarsData: [
                         sinLine(luxPoints),
                       ],
                       titlesData: const FlTitlesData(
-                        show: false,
+                        show: true,
+                        topTitles: AxisTitles(sideTitles: SideTitles()),
+                        bottomTitles: AxisTitles(sideTitles: SideTitles()),
+                        leftTitles: AxisTitles(sideTitles: SideTitles()),
                       ),
                     ),
                   ),
@@ -95,6 +98,14 @@ class _LuxChartState extends State<LuxChart> {
       color: Colors.blue,
       barWidth: 4,
       isCurved: true,
+      belowBarData: BarAreaData(show:true,
+      gradient: LinearGradient(
+        end: Alignment.topCenter,
+        begin: Alignment.bottomCenter,
+        colors: [Colors.blue.withOpacity(0), Colors.blue],
+        stops: const [0.1, 1.0],
+      ),
+      )
     );
   }
 
