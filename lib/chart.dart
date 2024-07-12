@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:math' as math;
+//import 'dart:math' as math;
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 // https://github.com/imaNNeo/fl_chart/blob/main/example/lib/presentation/samples/line/line_chart_sample10.dart
 
 class LuxChart extends StatefulWidget {
-  const LuxChart({super.key});
+  const LuxChart({required this.chartValue, super.key});
 
+final double chartValue;
   final Color lineColor = Colors.blue;
 
   @override
@@ -33,7 +34,7 @@ class _LuxChartState extends State<LuxChart> {
         luxPoints.removeAt(0);
       }
       setState(() {
-        luxPoints.add(FlSpot(xValue, math.sin(xValue)));
+        luxPoints.add(FlSpot(xValue, widget.chartValue));
       });
       xValue += step;
     });
@@ -55,8 +56,8 @@ class _LuxChartState extends State<LuxChart> {
                   child: LineChart(
                     duration: const Duration(milliseconds: 100),
                     LineChartData(
-                      minY: -1,
-                      maxY: 1,
+                      minY: 0,
+                      maxY: 2000,
                       minX: luxPoints.first.x,
                       maxX: luxPoints.last.x,
                       lineTouchData: const LineTouchData(enabled: false),
