@@ -30,7 +30,7 @@ class _LuxChartState extends State<LuxChart> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(milliseconds:500), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds:100), (timer) {
       while (sinPoints.length > limitCount) {
         sinPoints.removeAt(0);
         cosPoints.removeAt(0);
@@ -57,6 +57,7 @@ class _LuxChartState extends State<LuxChart> {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 24.0),
                   child: LineChart(
+                    duration: const Duration(milliseconds: 100),
                     LineChartData(
                       minY: -1,
                       maxY: 1,
