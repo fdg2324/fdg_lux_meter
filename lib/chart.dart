@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:math' as math;
+//import 'dart:math' as math;
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 // https://github.com/imaNNeo/fl_chart/blob/main/example/lib/presentation/samples/line/line_chart_sample10.dart
 
 class LuxChart extends StatefulWidget {
-  const LuxChart({super.key});
+  const LuxChart({required this.chartValue, super.key});
 
-  final Color sinColor = Colors.blue;
-  final Color cosColor = Colors.pink;
+final double chartValue;
+  final Color lineColor = Colors.blue;
 
   @override
   State<LuxChart> createState() => _LuxChartState();
@@ -19,25 +19,22 @@ class LuxChart extends StatefulWidget {
 
 class _LuxChartState extends State<LuxChart> {
   final limitCount = 100;
-  final sinPoints = <FlSpot>[];
-  final cosPoints = <FlSpot>[];
+  final luxPoints = <FlSpot>[];
 
   double xValue = 0;
-  double step = 0.05;
+  double step = 0.5;
 
   late Timer timer;
 
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(milliseconds: 40), (timer) {
-      while (sinPoints.length > limitCount) {
-        sinPoints.removeAt(0);
-        cosPoints.removeAt(0);
+    timer = Timer.periodic(const Duration(milliseconds:100), (timer) {
+      while (luxPoints.length > limitCount) {
+        luxPoints.removeAt(0);
       }
       setState(() {
-        sinPoints.add(FlSpot(xValue, math.sin(xValue)));
-        cosPoints.add(FlSpot(xValue, math.cos(xValue)));
+        luxPoints.add(FlSpot(xValue, widget.chartValue));
       });
       xValue += step;
     });
@@ -45,61 +42,39 @@ class _LuxChartState extends State<LuxChart> {
 
   @override
   Widget build(BuildContext context) {
-    return cosPoints.isNotEmpty
+    return luxPoints.isNotEmpty
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 12),
-              Text(
-                'x: ${xValue.toStringAsFixed(1)}',
-                style: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'sin: ${sinPoints.last.y.toStringAsFixed(1)}',
-                style: TextStyle(
-                  color: widget.sinColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'cos: ${cosPoints.last.y.toStringAsFixed(1)}',
-                style: TextStyle(
-                  color: widget.cosColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               const SizedBox(
                 height: 12,
               ),
               AspectRatio(
                 aspectRatio: 1.5,
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 24.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: LineChart(
+                    duration: const Duration(milliseconds: 100),
                     LineChartData(
-                      minY: -1,
-                      maxY: 1,
-                      minX: sinPoints.first.x,
-                      maxX: sinPoints.last.x,
+                      minY: 0,
+                      maxY: 2000,
+                      minX: luxPoints.first.x,
+                      maxX: luxPoints.last.x,
                       lineTouchData: const LineTouchData(enabled: false),
                       clipData: const FlClipData.all(),
                       gridData: const FlGridData(
                         show: true,
                         drawVerticalLine: false,
                       ),
-                      borderData: FlBorderData(show: false),
+                      borderData: FlBorderData(show: true),
                       lineBarsData: [
-                        sinLine(sinPoints),
-                        cosLine(cosPoints),
+                        sinLine(luxPoints),
                       ],
                       titlesData: const FlTitlesData(
-                        show: false,
+                        show: true,
+                        topTitles: AxisTitles(sideTitles: SideTitles()),
+                        bottomTitles: AxisTitles(sideTitles: SideTitles()),
+                        leftTitles: AxisTitles(sideTitles: SideTitles()),
                       ),
                     ),
                   ),
@@ -114,29 +89,23 @@ class _LuxChartState extends State<LuxChart> {
     return LineChartBarData(
       spots: points,
       dotData: const FlDotData(
-        show: false,
+        show: true,
       ),
+      // gradient: LinearGradient(
+      //   colors: [widget.sinColor.withOpacity(0), widget.sinColor],
+      //   stops: const [0.1, 1.0],
+      // ),
+      color: Colors.blue,
+      barWidth: 4,
+      isCurved: true,
+      belowBarData: BarAreaData(show:true,
       gradient: LinearGradient(
-        colors: [widget.sinColor.withOpacity(0), widget.sinColor],
+        end: Alignment.topCenter,
+        begin: Alignment.bottomCenter,
+        colors: [Colors.blue.withOpacity(0), Colors.blue],
         stops: const [0.1, 1.0],
       ),
-      barWidth: 4,
-      isCurved: false,
-    );
-  }
-
-  LineChartBarData cosLine(List<FlSpot> points) {
-    return LineChartBarData(
-      spots: points,
-      dotData: const FlDotData(
-        show: false,
-      ),
-      gradient: LinearGradient(
-        colors: [widget.cosColor.withOpacity(0), widget.cosColor],
-        stops: const [0.1, 1.0],
-      ),
-      barWidth: 4,
-      isCurved: false,
+      )
     );
   }
 
