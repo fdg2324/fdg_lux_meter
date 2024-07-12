@@ -23,14 +23,14 @@ class _LuxChartState extends State<LuxChart> {
   final cosPoints = <FlSpot>[];
 
   double xValue = 0;
-  double step = 0.05;
+  double step = 0.5;
 
   late Timer timer;
 
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(milliseconds: 40), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds:500), (timer) {
       while (sinPoints.length > limitCount) {
         sinPoints.removeAt(0);
         cosPoints.removeAt(0);
@@ -49,31 +49,6 @@ class _LuxChartState extends State<LuxChart> {
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 12),
-              Text(
-                'x: ${xValue.toStringAsFixed(1)}',
-                style: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'sin: ${sinPoints.last.y.toStringAsFixed(1)}',
-                style: TextStyle(
-                  color: widget.sinColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'cos: ${cosPoints.last.y.toStringAsFixed(1)}',
-                style: TextStyle(
-                  color: widget.cosColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               const SizedBox(
                 height: 12,
               ),
@@ -114,14 +89,15 @@ class _LuxChartState extends State<LuxChart> {
     return LineChartBarData(
       spots: points,
       dotData: const FlDotData(
-        show: false,
+        show: true,
       ),
-      gradient: LinearGradient(
-        colors: [widget.sinColor.withOpacity(0), widget.sinColor],
-        stops: const [0.1, 1.0],
-      ),
+      // gradient: LinearGradient(
+      //   colors: [widget.sinColor.withOpacity(0), widget.sinColor],
+      //   stops: const [0.1, 1.0],
+      // ),
+      color: Colors.blue,
       barWidth: 4,
-      isCurved: false,
+      isCurved: true,
     );
   }
 
@@ -129,7 +105,7 @@ class _LuxChartState extends State<LuxChart> {
     return LineChartBarData(
       spots: points,
       dotData: const FlDotData(
-        show: false,
+        show: true,
       ),
       gradient: LinearGradient(
         colors: [widget.cosColor.withOpacity(0), widget.cosColor],
