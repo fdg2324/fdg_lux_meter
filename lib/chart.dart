@@ -10,8 +10,7 @@ import 'package:flutter/material.dart';
 class LuxChart extends StatefulWidget {
   const LuxChart({super.key});
 
-  final Color sinColor = Colors.blue;
-  final Color cosColor = Colors.pink;
+  final Color lineColor = Colors.blue;
 
   @override
   State<LuxChart> createState() => _LuxChartState();
@@ -19,8 +18,7 @@ class LuxChart extends StatefulWidget {
 
 class _LuxChartState extends State<LuxChart> {
   final limitCount = 100;
-  final sinPoints = <FlSpot>[];
-  final cosPoints = <FlSpot>[];
+  final luxPoints = <FlSpot>[];
 
   double xValue = 0;
   double step = 0.5;
@@ -31,13 +29,11 @@ class _LuxChartState extends State<LuxChart> {
   void initState() {
     super.initState();
     timer = Timer.periodic(const Duration(milliseconds:100), (timer) {
-      while (sinPoints.length > limitCount) {
-        sinPoints.removeAt(0);
-        cosPoints.removeAt(0);
+      while (luxPoints.length > limitCount) {
+        luxPoints.removeAt(0);
       }
       setState(() {
-        sinPoints.add(FlSpot(xValue, math.sin(xValue)));
-        cosPoints.add(FlSpot(xValue, math.cos(xValue)));
+        luxPoints.add(FlSpot(xValue, math.sin(xValue)));
       });
       xValue += step;
     });
@@ -45,7 +41,7 @@ class _LuxChartState extends State<LuxChart> {
 
   @override
   Widget build(BuildContext context) {
-    return cosPoints.isNotEmpty
+    return luxPoints.isNotEmpty
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -61,8 +57,8 @@ class _LuxChartState extends State<LuxChart> {
                     LineChartData(
                       minY: -1,
                       maxY: 1,
-                      minX: sinPoints.first.x,
-                      maxX: sinPoints.last.x,
+                      minX: luxPoints.first.x,
+                      maxX: luxPoints.last.x,
                       lineTouchData: const LineTouchData(enabled: false),
                       clipData: const FlClipData.all(),
                       gridData: const FlGridData(
@@ -71,8 +67,7 @@ class _LuxChartState extends State<LuxChart> {
                       ),
                       borderData: FlBorderData(show: false),
                       lineBarsData: [
-                        sinLine(sinPoints),
-                        cosLine(cosPoints),
+                        sinLine(luxPoints),
                       ],
                       titlesData: const FlTitlesData(
                         show: false,
@@ -99,21 +94,6 @@ class _LuxChartState extends State<LuxChart> {
       color: Colors.blue,
       barWidth: 4,
       isCurved: true,
-    );
-  }
-
-  LineChartBarData cosLine(List<FlSpot> points) {
-    return LineChartBarData(
-      spots: points,
-      dotData: const FlDotData(
-        show: true,
-      ),
-      gradient: LinearGradient(
-        colors: [widget.cosColor.withOpacity(0), widget.cosColor],
-        stops: const [0.1, 1.0],
-      ),
-      barWidth: 4,
-      isCurved: false,
     );
   }
 
