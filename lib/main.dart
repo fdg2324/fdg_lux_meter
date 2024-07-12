@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:light/light.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
+import 'chart.dart';
+
 void main() {
   return runApp(const GaugeApp());
 }
@@ -76,7 +78,8 @@ class MyHomePageState extends State<MyHomePage> {
                   luxValue = value;
                 });
               },
-            )
+            ),
+            const LuxChart()
           ],
         ));
   }
