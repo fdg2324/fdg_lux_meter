@@ -17,7 +17,7 @@ class GaugeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Radial Gauge Demo',
+      title: 'GS Lux Meter',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const MyHomePage(),
     );

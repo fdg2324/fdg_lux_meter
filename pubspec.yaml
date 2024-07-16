@@ -24,9 +24,9 @@ flutter_launcher_icons:
   ios: false
   image_path: "assets/images/lightbulb.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
-  # web:
-  #   generate: true
-  #   image_path: "path/to/image.png"
+  web:
+    generate: true
+    image_path: "assets/images/lightbulb.png"
   #   background_color: "#hexcode"
   #   theme_color: "#hexcode"
   # windows:
