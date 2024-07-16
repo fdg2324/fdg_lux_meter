@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:light/light.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -58,7 +59,9 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    startListening();
+    if (! kIsWeb) {
+      startListening();
+    }
   }
 
   @override
@@ -68,22 +71,24 @@ class MyHomePageState extends State<MyHomePage> {
         foregroundColor: Colors.white,
         backgroundColor: Colors.blue,
         centerTitle: true,),
-        body: Column(
-          children: [
-            _getRadialGauge(),
-            Slider(
-              value: luxValue,
-              min: 0,
-              max: maxLuxValue,
-              onChanged: (value) {
-                print(value);
-                setState(() {
-                  luxValue = value;
-                });
-              },
-            ),
-            LuxChart(chartValue: luxValue,)
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              _getRadialGauge(),
+              Slider(
+                value: luxValue,
+                min: 0,
+                max: maxLuxValue,
+                onChanged: (value) {
+                  print(value);
+                  setState(() {
+                    luxValue = value;
+                  });
+                },
+              ),
+              LuxChart(chartValue: luxValue,)
+            ],
+          ),
         ));
   }
 
