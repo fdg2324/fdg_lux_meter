@@ -64,7 +64,7 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('FDG Lux Meter'),
+        appBar: AppBar(title: const Text("Timo's Lux Meter"),
         foregroundColor: Colors.white,
         backgroundColor: Colors.blue,
         centerTitle: true,),
