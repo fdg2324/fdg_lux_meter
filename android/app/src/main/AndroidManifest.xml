@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="GS Lux Meter"
+        android:label="fdg_lux_meter"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

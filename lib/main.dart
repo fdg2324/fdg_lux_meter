@@ -121,7 +121,7 @@ class MyHomePageState extends State<MyHomePage> {
             NeedlePointer(value: luxValue)
           ], annotations: <GaugeAnnotation>[
             GaugeAnnotation(
-                widget: Text(luxValue.toStringAsFixed(2),
+                widget: Text(luxValue.toStringAsFixed(0) + " lx",
                     style: const TextStyle(
                         fontSize: 25, fontWeight: FontWeight.bold)),
                 angle: 90,
