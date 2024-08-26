@@ -54,6 +54,7 @@ class _LuxChartState extends State<LuxChart> {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: LineChart(
+                    //duration: const Duration(milliseconds: 100),
                     duration: const Duration(milliseconds: 100),
                     LineChartData(
                       minY: 0,
@@ -70,11 +71,28 @@ class _LuxChartState extends State<LuxChart> {
                       lineBarsData: [
                         sinLine(luxPoints),
                       ],
-                      titlesData: const FlTitlesData(
+                      titlesData: FlTitlesData(
                         show: true,
-                        topTitles: AxisTitles(sideTitles: SideTitles()),
-                        bottomTitles: AxisTitles(sideTitles: SideTitles()),
-                        leftTitles: AxisTitles(sideTitles: SideTitles()),
+                        topTitles: const AxisTitles(sideTitles: SideTitles()),
+                        bottomTitles: const AxisTitles(sideTitles: SideTitles()),
+                        leftTitles: const AxisTitles(sideTitles: SideTitles()),
+                        rightTitles: AxisTitles(
+                              //axisNameWidget: const Text("lux"),
+                              //axisNameSize: 20,
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                reservedSize: 50,
+                                //interval: 250,
+                                getTitlesWidget: (value, meta) {
+                                  return SideTitleWidget(
+                                    //angle: -3.14 / 4,
+                                    space: 5 /* space to axis */,
+                                    axisSide: AxisSide.right,
+                                    child: Text("${value.toStringAsFixed(0)}lx"),
+                                  );
+                                },
+                              )
+                        )
                       ),
                     ),
                   ),
