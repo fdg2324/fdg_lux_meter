@@ -55,7 +55,7 @@ class _LuxChartState extends State<LuxChart> {
                   padding: const EdgeInsets.all(10.0),
                   child: LineChart(
                     //duration: const Duration(milliseconds: 100),
-                    duration: const Duration(milliseconds: 100),
+                    duration: const Duration(milliseconds: 0),
                     LineChartData(
                       minY: 0,
                       maxY: 2000,
@@ -114,14 +114,14 @@ class _LuxChartState extends State<LuxChart> {
       //   stops: const [0.1, 1.0],
       // ),
       color: Colors.blue,
-      barWidth: 4,
+      barWidth: 2,
       isCurved: true,
       belowBarData: BarAreaData(show:true,
       gradient: LinearGradient(
-        end: Alignment.topCenter,
-        begin: Alignment.bottomCenter,
-        colors: [Colors.blue.withOpacity(0), Colors.blue],
-        stops: const [0.1, 1.0],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [Colors.blue.withOpacity(0.9), Colors.blue.withOpacity(0)],
+        stops: const [0, 0.9],
       ),
       )
     );
