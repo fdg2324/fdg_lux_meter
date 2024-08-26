@@ -4,13 +4,13 @@ import 'dart:async';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-// originally copied from 
+// originally copied from
 // https://github.com/imaNNeo/fl_chart/blob/main/example/lib/presentation/samples/line/line_chart_sample10.dart
 
 class LuxChart extends StatefulWidget {
   const LuxChart({required this.chartValue, super.key});
 
-final double chartValue;
+  final double chartValue;
   final Color lineColor = Colors.blue;
 
   @override
@@ -29,7 +29,7 @@ class _LuxChartState extends State<LuxChart> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(milliseconds:100), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       while (luxPoints.length > limitCount) {
         luxPoints.removeAt(0);
       }
@@ -63,6 +63,7 @@ class _LuxChartState extends State<LuxChart> {
                       maxX: luxPoints.last.x,
                       lineTouchData: const LineTouchData(enabled: false),
                       clipData: const FlClipData.all(),
+                      //clipData: const FlClipData.none(),
                       gridData: const FlGridData(
                         show: true,
                         drawVerticalLine: false,
@@ -72,28 +73,28 @@ class _LuxChartState extends State<LuxChart> {
                         sinLine(luxPoints),
                       ],
                       titlesData: FlTitlesData(
-                        show: true,
-                        topTitles: const AxisTitles(sideTitles: SideTitles()),
-                        bottomTitles: const AxisTitles(sideTitles: SideTitles()),
-                        leftTitles: const AxisTitles(sideTitles: SideTitles()),
-                        rightTitles: AxisTitles(
+                          show: true,
+                          topTitles: const AxisTitles(sideTitles: SideTitles()),
+                          bottomTitles:
+                              const AxisTitles(sideTitles: SideTitles()),
+                          leftTitles:
+                              const AxisTitles(sideTitles: SideTitles()),
+                          rightTitles: AxisTitles(
                               //axisNameWidget: const Text("lux"),
                               //axisNameSize: 20,
                               sideTitles: SideTitles(
-                                showTitles: true,
-                                reservedSize: 50,
-                                //interval: 250,
-                                getTitlesWidget: (value, meta) {
-                                  return SideTitleWidget(
-                                    //angle: -3.14 / 4,
-                                    space: 5 /* space to axis */,
-                                    axisSide: AxisSide.right,
-                                    child: Text("${value.toStringAsFixed(0)}lx"),
-                                  );
-                                },
-                              )
-                        )
-                      ),
+                            showTitles: true,
+                            reservedSize: 50,
+                            //interval: 250,
+                            getTitlesWidget: (value, meta) {
+                              return SideTitleWidget(
+                                //angle: -3.14 / 4,
+                                space: 5 /* space to axis */,
+                                axisSide: AxisSide.right,
+                                child: Text("${value.toStringAsFixed(0)}lx"),
+                              );
+                            },
+                          ))),
                     ),
                   ),
                 ),
@@ -105,26 +106,26 @@ class _LuxChartState extends State<LuxChart> {
 
   LineChartBarData sinLine(List<FlSpot> points) {
     return LineChartBarData(
-      spots: points,
-      dotData: const FlDotData(
-        show: true,
-      ),
-      // gradient: LinearGradient(
-      //   colors: [widget.sinColor.withOpacity(0), widget.sinColor],
-      //   stops: const [0.1, 1.0],
-      // ),
-      color: Colors.blue,
-      barWidth: 2,
-      isCurved: true,
-      belowBarData: BarAreaData(show:true,
-      gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [Colors.blue.withOpacity(0.9), Colors.blue.withOpacity(0)],
-        stops: const [0, 0.9],
-      ),
-      )
-    );
+        spots: points,
+        dotData: const FlDotData(
+          show: true,
+        ),
+        // gradient: LinearGradient(
+        //   colors: [widget.sinColor.withOpacity(0), widget.sinColor],
+        //   stops: const [0.1, 1.0],
+        // ),
+        color: Colors.blue,
+        barWidth: 2,
+        isCurved: true,
+        belowBarData: BarAreaData(
+          show: true,
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue.withOpacity(0.9), Colors.blue.withOpacity(0)],
+            stops: const [0, 0.9],
+          ),
+        ));
   }
 
   @override
