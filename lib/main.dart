@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:light/light.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -17,7 +18,7 @@ class GaugeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Radial Gauge Demo',
+      title: 'GS Lux Meter',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const MyHomePage(),
     );
@@ -58,7 +59,9 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    startListening();
+    if (! kIsWeb) {
+      startListening();
+    }
   }
 
   @override
@@ -68,22 +71,24 @@ class MyHomePageState extends State<MyHomePage> {
         foregroundColor: Colors.white,
         backgroundColor: Colors.blue,
         centerTitle: true,),
-        body: Column(
-          children: [
-            _getRadialGauge(),
-            Slider(
-              value: luxValue,
-              min: 0,
-              max: maxLuxValue,
-              onChanged: (value) {
-                print(value);
-                setState(() {
-                  luxValue = value;
-                });
-              },
-            ),
-            LuxChart(chartValue: luxValue,)
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              _getRadialGauge(),
+              Slider(
+                value: luxValue,
+                min: 0,
+                max: maxLuxValue,
+                onChanged: (value) {
+                  print(value);
+                  setState(() {
+                    luxValue = value;
+                  });
+                },
+              ),
+              LuxChart(chartValue: luxValue,)
+            ],
+          ),
         ));
   }
 
@@ -116,7 +121,7 @@ class MyHomePageState extends State<MyHomePage> {
             NeedlePointer(value: luxValue)
           ], annotations: <GaugeAnnotation>[
             GaugeAnnotation(
-                widget: Text(luxValue.toStringAsFixed(2),
+                widget: Text(luxValue.toStringAsFixed(0) + " lx",
                     style: const TextStyle(
                         fontSize: 25, fontWeight: FontWeight.bold)),
                 angle: 90,
